@@ -139,12 +139,12 @@ jobs:
 #       if: env.SSH_ACTIONS == 'true' || contains(github.event.action, 'ssh')
 
 
-    - name: SSH connection to Actions
-      uses: P3TERX/ssh2actions@v1.0.0
-      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
-      env:
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#    - name: SSH connection to Actions
+#      uses: P3TERX/ssh2actions@v1.0.0
+#      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+#      env:
+#        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+#        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     - name: Download package
       id: package
@@ -206,22 +206,22 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: Create release
-      id: release
-      uses: ncipollo/release-action@v1
-      with:
-        name: ${{ env.DATE }} for ${{ env.PRODUCT_NAME }}
-        allowUpdates: true
-        tag: ${{ env.FILE_NAME }}
-        commit: master
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        body: |
-          默认IP： 192.168.2.1 默认密码： 无
-          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/openwrt/openwrt)更新记录】
-          Default IP:192.168.2.1 password:none
-          Current version: [The last [➦source code](https://github.com/openwrt/openwrt) update record before compiling]
-          ${{ env.useVersionInfo }}
-        artifacts: ${{ env.FIRMWARE }}/*
+#    - name: Create release
+#      id: release
+#      uses: ncipollo/release-action@v1
+#      with:
+#        name: ${{ env.DATE }} for ${{ env.PRODUCT_NAME }}
+#        allowUpdates: true
+#        tag: ${{ env.FILE_NAME }}
+#        commit: master
+#        github_token: ${{ secrets.GITHUB_TOKEN }}
+#        body: |
+#          默认IP： 192.168.2.1 默认密码： 无
+#          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/openwrt/openwrt)更新记录】
+#          Default IP:192.168.2.1 password:none
+#          Current version: [The last [➦source code](https://github.com/openwrt/openwrt) update record before compiling]
+#          ${{ env.useVersionInfo }}
+#        artifacts: ${{ env.FIRMWARE }}/*
 
     - name: Delete workflow runs
       uses: Mattraks/delete-workflow-runs@main
@@ -229,16 +229,16 @@ jobs:
         retain_days: 1
         keep_minimum_runs: 3
 
-    - name: Remove old Releases
-      uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        repo:
-        keep_latest: 3
-        delete_tag_pattern:
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: Remove old Releases
+#      uses: dev-drprasad/delete-older-releases@master
+#      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+#      with:
+#        repo:
+#        keep_latest: 3
+#        delete_tag_pattern:
+#        delete_tags: true
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 #    - name: Telegram notification
 #      run: |
